@@ -5,6 +5,11 @@ import java.nio.channels.MulticastChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+/**
+ * Thread to listen on the socket.
+ * This way we can listen in "real-time".
+ * And still be able to write a message.
+ */
 public class ListeningThread extends Thread {
     private MulticastSocket socket;
     private boolean alive = false;
