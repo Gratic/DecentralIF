@@ -30,7 +30,7 @@ public class DecentralIF {
             listeningThread.start();
 
             String entryMessage = username + " a rejoint la discussion !";
-            DatagramPacket entryPacket = new DatagramPacket(entryMessage.getBytes(StandardCharsets.UTF_8), entryMessage.getBytes(StandardCharsets.UTF_8).length, group, 6789);
+            DatagramPacket entryPacket = createDataPacket(group, entryMessage);
             socket.send(entryPacket);
 
             String message;
@@ -46,12 +46,12 @@ public class DecentralIF {
                 }
 
                 message = username + ": " + message;
-                DatagramPacket messagePacket = new DatagramPacket(message.getBytes(StandardCharsets.UTF_8), message.getBytes(StandardCharsets.UTF_8).length, group, 6789);
+                DatagramPacket messagePacket = createDataPacket(group, message);
                 socket.send(messagePacket);
             }
 
             String exitMessage = username + " a quitté la discussion !";
-            DatagramPacket exitPacket = new DatagramPacket(exitMessage.getBytes(StandardCharsets.UTF_8), exitMessage.getBytes(StandardCharsets.UTF_8).length, group, 6789);
+            DatagramPacket exitPacket = createDataPacket(group, exitMessage);
             socket.send(exitPacket);
 
             try {
@@ -66,5 +66,9 @@ public class DecentralIF {
             e.printStackTrace();
         }
 
+    }
+
+    private static DatagramPacket createDataPacket(InetAddress group, String message) {
+        return new DatagramPacket(message.getBytes(StandardCharsets.UTF_8), message.getBytes(StandardCharsets.UTF_8).length, group, 6789);
     }
 }
