@@ -1,34 +1,29 @@
-import javax.security.sasl.SaslClient;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 /**
  * DecentralIF
- *
+ * <p>
  * Decentralized chat using multicast.
  */
 public class DecentralIF {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         System.out.println("Bienvenue dans DecentralIF !");
         try {
             // Multicast Socket Creation
             InetAddress group = InetAddress.getByName("228.5.6.7");
-            MulticastSocket socket = null;
-            socket = new MulticastSocket(6789);
+            MulticastSocket socket = new MulticastSocket(6789);
             socket.joinGroup(group);
 
             // Ask for usename
             Scanner sc = new Scanner(System.in);
             String username = null;
 
-            while(username == null || username.equals(""))
-            {
+            while (username == null || username.equals("")) {
                 System.out.println("Entrez votre nom d'utilisateur :");
                 username = sc.nextLine();
             }
@@ -45,13 +40,11 @@ public class DecentralIF {
             String message;
 
             // While we want to send message into the discussion.
-            while(true)
-            {
+            while (true) {
                 message = sc.nextLine();
 
                 // Command to quit the discussion
-                if(message.equals("/quit"))
-                {
+                if (message.equals("/quit")) {
                     listeningThread.setAlive(false);
                     break;
                 }
@@ -82,7 +75,7 @@ public class DecentralIF {
     /**
      * Utility function to create a DatagramPacket with a String.
      *
-     * @param group the group to send to.
+     * @param group   the group to send to.
      * @param message the message that we want to send.
      * @return The DatagramPacket.
      */

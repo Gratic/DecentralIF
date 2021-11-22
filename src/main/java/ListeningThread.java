@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.MulticastSocket;
-import java.nio.channels.MulticastChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -11,11 +10,10 @@ import java.util.Arrays;
  * And still be able to write a message.
  */
 public class ListeningThread extends Thread {
-    private MulticastSocket socket;
-    private boolean alive = false;
+    private final MulticastSocket socket;
+    private boolean alive;
 
-    public ListeningThread(MulticastSocket socket)
-    {
+    public ListeningThread(MulticastSocket socket) {
         this.socket = socket;
         alive = true;
     }
@@ -26,8 +24,7 @@ public class ListeningThread extends Thread {
 
     @Override
     public void run() {
-        while(alive)
-        {
+        while (alive) {
             byte[] buf = new byte[2048];
             DatagramPacket packet = new DatagramPacket(buf, buf.length);
             try {
